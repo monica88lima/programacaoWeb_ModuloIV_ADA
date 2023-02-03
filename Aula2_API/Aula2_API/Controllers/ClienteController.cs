@@ -39,7 +39,7 @@ namespace Aula2_API.Controllers
 
         }
 
-        //body->returno das respostas
+        //body->retorno das respostas
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Cliente> >Consultar()

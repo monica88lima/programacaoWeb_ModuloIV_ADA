@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aula2_API.Controllers
 {
+    //esses atributos tambem são chamados de decorators (são os apoios dos metodos)
     [ApiController]
     [Route("[controller]")]
     [Consumes("Application/json")]
@@ -17,7 +18,7 @@ namespace Aula2_API.Controllers
             {
                 Nome = "Monica",
                 ID_Cliente = 010,
-                DataNascimento = new DateTime(1988,04,07)
+                DataNascimento = new DateTime(1988, 04, 07)
 
             });
 
@@ -42,7 +43,7 @@ namespace Aula2_API.Controllers
         //body->retorno das respostas
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<Cliente> >Consultar()
+        public ActionResult<List<Cliente>> Consultar()
         {
             return Ok(cliente);
         }
@@ -55,30 +56,34 @@ namespace Aula2_API.Controllers
             Cliente clienteFiltro = cliente.FirstOrDefault(x => x.Nome == nome);
             return Ok(clienteFiltro);
         }
-
+        //modelstate(funcionalidade da ControllerBase) e quem recebe no parametro neste caso e o Cliente (organiza parametros)
+        // [FromBody] refere-se que aquele parametro e complexo e vem no corpo, [FromRoute] vem na rota
+        //com uma query seria porta/Cliente? tudo depois da interrogação e da query
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult <List<Cliente>>Inserir(Cliente pessoa)
+        
+        public ActionResult<List<Cliente>> Inserir(Cliente pessoa)
         {
             cliente.Add(pessoa);
-            return CreatedAtAction(nameof(ConsultarClientes),pessoa);
+            return CreatedAtAction(nameof(ConsultarClientes), pessoa);
         }
         //nameof -> responde com o link para consulta do item criado.
         //actionResult -> trata-se do conteudo
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK , Type = typeof(List<Cliente>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Cliente>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult  Alterar(int index, Cliente pessoa)
+
+        public IActionResult Alterar(int index, Cliente pessoa)
         {
-            if(index == null)
+            if (index == null)
             {
                 return BadRequest();
             }
             cliente[index] = pessoa;
             return Ok(cliente);
-            
+
         }
         //usa-se a interface quando nao se sabe o tipo do retorno
 

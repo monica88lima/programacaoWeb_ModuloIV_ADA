@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Aula2_API.Repository;
+using Aula2_API.Interface;
 
 namespace Aula2_API.Controllers
 {
@@ -10,34 +12,12 @@ namespace Aula2_API.Controllers
     //Producer e Consumes -> refere-se ao que a Api aceita, pode ser coloca de forma geral ou no metodo
     public class ClienteController : ControllerBase
     {
-        public List<Cliente> cliente = new List<Cliente>();
+        public ICliente _repository { get; set; }
+              
 
-        public ClienteController()
+        public ClienteController(ICliente clienteBd)
         {
-            cliente.Add(new Cliente
-            {
-                Nome = "Monica",
-                ID_Cliente = 010,
-                DataNascimento = new DateTime(1988, 04, 07)
-
-            });
-
-            cliente.Add(new Cliente
-            {
-                Nome = "Laura",
-                ID_Cliente = 020,
-                DataNascimento = new DateTime(2015, 01, 24)
-
-            });
-
-            cliente.Add(new Cliente
-            {
-                Nome = "Alice",
-                ID_Cliente = 030,
-                DataNascimento = new DateTime(2018, 11, 29)
-
-            });
-
+            _repository = clienteBd;
         }
 
         //body->retorno das respostas
@@ -45,16 +25,21 @@ namespace Aula2_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Cliente>> Consultar()
         {
-            return Ok(cliente);
+
+            return Ok(_repository.SelecionarClientes());
         }
         //action refere-se a ação
         //producesResponses, produção da resposta o codigo de resposta
         [HttpGet("Filtro")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<Cliente> ConsultarClientes(string nome)
+        public ActionResult<Cliente> ConsultarCliente(int id)
         {
-            Cliente clienteFiltro = cliente.FirstOrDefault(x => x.Nome == nome);
-            return Ok(clienteFiltro);
+            Cliente cliente = _repository.SelecionarCliente(id);
+            if (cliente== null)
+            {
+                return BadRequest();
+            }
+            return Ok(cliente);
         }
         //modelstate(funcionalidade da ControllerBase) e quem recebe no parametro neste caso e o Cliente (organiza parametros)
         // [FromBody] refere-se que aquele parametro e complexo e vem no corpo, [FromRoute] vem na rota
@@ -62,46 +47,51 @@ namespace Aula2_API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        
-        public ActionResult<List<Cliente>> Inserir(Cliente pessoa)
+
+        public ActionResult<List<Cliente>> Inserir(Cliente cliente)
         {
-            cliente.Add(pessoa);
-            return CreatedAtAction(nameof(ConsultarClientes), pessoa);
+
+            if (!_repository.InserirCliente(cliente))
+            {
+                return BadRequest();
+            }
+
+            return CreatedAtAction(nameof(Consultar), cliente);
         }
+
+
         //nameof -> responde com o link para consulta do item criado.
         //actionResult -> trata-se do conteudo
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Cliente>))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public IActionResult Alterar(int index, Cliente pessoa)
+        public IActionResult Alterar(int index, Cliente cliente)
         {
-            if (index == null)
+            if (!_repository.AlterarCliente(cliente, index))
             {
                 return BadRequest();
             }
-            cliente[index] = pessoa;
-            return Ok(cliente);
-
+            return NoContent();
         }
-        //usa-se a interface quando nao se sabe o tipo do retorno
+        //nocontent - deu certo mas nao devolvo nada
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Deletar(string nome)
+        public IActionResult Deletar(int id)
         {
-            Cliente pessoaDeletar = cliente.FirstOrDefault(p => p.Nome == nome);
-            if (pessoaDeletar == null)
+            if (!_repository.DeletarCliente(id))
             {
                 return BadRequest();
             }
-
-            cliente.Remove(pessoaDeletar);
             return NoContent();
         }
 
-
     }
+    //usa-se a interface quando nao se sabe o tipo do retorno
+
+
 }
+

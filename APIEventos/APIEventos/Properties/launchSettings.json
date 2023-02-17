@@ -4,21 +4,19 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:19434",
-      "sslPort": 44328
+      "applicationUrl": "http://localhost:8579",
+      "sslPort": 44311
     }
   },
   "profiles": {
-    "Aula2_API": {
+    "APIEventos": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7085;http://localhost:5085",
+      "applicationUrl": "https://localhost:7035;http://localhost:5035",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_CONFIG": "server=127.0.0.1;userid=root;password=N0v@S3nh@;database=APICliente;Allow User Variables=true"
-
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "IIS Express": {

@@ -12,7 +12,7 @@ namespace APIEventos.Service.Dto
         public int idReservation { get; set; }
         public string personName { get; set; }
         public int idEvent { get; set; }
-        public int quntity { get; set; }
+        public int quantity { get; set; }
         public string title { get; set; }
     }
 }

@@ -12,18 +12,19 @@ namespace APIEventos.Controllers
     [Route("api/[controller]")]
     [Consumes("Application/json")]
     [Produces("application/json")]
-    [Authorize]
+
     public class CityEventController : ControllerBase
     {
-         
-        private ICityEventService _cityEventService;
-        
+
+        private ICityEventService _cityEventService;        
+
 
         public CityEventController(ICityEventService cityEventService)
         {
-        
+
             _cityEventService = cityEventService;
-           
+            
+
         }
 
         [HttpGet("VisualizarEventosPorTitulo")]
@@ -47,7 +48,7 @@ namespace APIEventos.Controllers
             return Ok(await _cityEventService.ConsultarEventosDataPrice(data, price));
         }
 
-
+        [Authorize]
         [Authorize(Roles = "admin")]
         [HttpPost(Name = "InserirEvento")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CityEventEntities))]
@@ -60,7 +61,7 @@ namespace APIEventos.Controllers
             }
             return CreatedAtAction(nameof(ConsultarEventosTitle), newEvent);
         }
-
+        [Authorize]
         [Authorize(Roles = "admin")]
         [HttpPut(Name = "AlterarEvento")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -77,7 +78,7 @@ namespace APIEventos.Controllers
             }
             return Ok();
         }
-
+        [Authorize]
         [Authorize(Roles = "admin")]
         [HttpDelete(Name = "ApagarEvento")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -85,7 +86,6 @@ namespace APIEventos.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ApagarEvento(long id)
         {
-
             if (!await _cityEventService.ApagarEvento(id))
             {
                 return BadRequest();
@@ -94,7 +94,7 @@ namespace APIEventos.Controllers
 
         }
 
-       
+
 
         ///Pensar nessa historia para criar o metodo
         ///primeiro verificar se o item existe no banco, retorno NoContent, se não existir.pesquisei mas  <summary>

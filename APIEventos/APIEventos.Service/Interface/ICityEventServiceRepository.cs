@@ -17,8 +17,7 @@ namespace APIEventos.Service.Interface
         Task<List<InformacaoCityEventDto>> SelecionarCityEventLocalData(DateTime data, string local);
         Task<InformacaoCityEventDto> SelecionarCityEventPorId(long IdEvent);
         Task<List<InformacaoCityEventDto>> SelecionarCityEventTitle(string title);
-
-
+        Task<bool> AlterarStatusCityEvent(bool Status, long idEvent);
 
 
     }

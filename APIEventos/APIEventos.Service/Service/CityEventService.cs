@@ -9,9 +9,12 @@ namespace APIEventos.Service.Service
     public class CityEventService : ICityEventService
     {
         private ICityEventServiceRepository _cityEventServiceRepository;
-        public CityEventService(ICityEventServiceRepository cityEventServiceRepository)
+        private IEventReservationService _eventReservationService;
+        
+        public CityEventService(ICityEventServiceRepository cityEventServiceRepository, IEventReservationService eventReservationService)
         {
             _cityEventServiceRepository = cityEventServiceRepository;
+            _eventReservationService = eventReservationService;
         }
 
         public async Task<InformacaoCityEventDto> ConsultarEventosPorId(long idEvent)
@@ -46,6 +49,13 @@ namespace APIEventos.Service.Service
 
         public async Task<bool> ApagarEvento(long id)
         {
+            //verificar no banco de reserva se tem alguma reserva nele
+            if(await _eventReservationService.VerificaExistenciaReservaPorIDEvento(id))
+            {
+               return await _cityEventServiceRepository.AlterarStatusCityEvent(false, id);
+
+            }
+
             return await _cityEventServiceRepository.DeletarCityEvent(id);
 
         }

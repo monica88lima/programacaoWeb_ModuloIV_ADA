@@ -96,6 +96,7 @@ public class CityEventRepository : ICityEventServiceRepository
 
         DynamicParameters parametros = new();
 
+        parametros.Add("idEvent", newEvent.IdEvent);
         parametros.Add("title", newEvent.Title);
         parametros.Add("description", newEvent.Description);
         parametros.Add("dateHourEvent", newEvent.DateHourEvent);
@@ -103,7 +104,6 @@ public class CityEventRepository : ICityEventServiceRepository
         parametros.Add("address", newEvent.Address);
         parametros.Add("price", newEvent.Price);
         parametros.Add("status", newEvent.Status);
-        parametros.Add("idEvent", newEvent.IdEvent);
 
         using MySqlConnection conn = new(_stringConnection);
 
@@ -118,6 +118,22 @@ public class CityEventRepository : ICityEventServiceRepository
 
         DynamicParameters parametros = new();
         parametros.Add("idEvent", idEvent);
+
+        using MySqlConnection conn = new(_stringConnection);
+
+        int linhasAfetadas = (await conn.ExecuteAsync(query, parametros));
+
+        return linhasAfetadas > 0;
+    }
+
+    public async Task<bool> AlterarStatusCityEvent(bool Status, long idEvent)
+    {
+        string query = "UPDATE CityEvent set status = @status WHERE idEvent = @idEvent";
+
+        DynamicParameters parametros = new();
+
+        parametros.Add("idEvent", idEvent);
+        parametros.Add("status", Status);
 
         using MySqlConnection conn = new(_stringConnection);
 

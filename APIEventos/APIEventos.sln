@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIEventos", "APIEventos\APIEventos.csproj", "{E7C611CC-C453-4077-BF24-53B4357EE795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIEventos", "APIEventos\APIEventos.csproj", "{E7C611CC-C453-4077-BF24-53B4357EE795}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIEventos.Infra.Data", "APIEventos.Infra.Data\APIEventos.Infra.Data.csproj", "{5AB8606B-BBB1-43A3-A446-DE0CACA01E15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIEventos.Service", "APIEventos.Service\APIEventos.Service.csproj", "{6D62CDED-83EA-453A-942F-DA798202F6FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{E7C611CC-C453-4077-BF24-53B4357EE795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7C611CC-C453-4077-BF24-53B4357EE795}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7C611CC-C453-4077-BF24-53B4357EE795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB8606B-BBB1-43A3-A446-DE0CACA01E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB8606B-BBB1-43A3-A446-DE0CACA01E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB8606B-BBB1-43A3-A446-DE0CACA01E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB8606B-BBB1-43A3-A446-DE0CACA01E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D62CDED-83EA-453A-942F-DA798202F6FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D62CDED-83EA-453A-942F-DA798202F6FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D62CDED-83EA-453A-942F-DA798202F6FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D62CDED-83EA-453A-942F-DA798202F6FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
